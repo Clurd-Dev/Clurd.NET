@@ -61,35 +61,45 @@ namespace Clurd.IO
         {
                try
         {
-            var allfiles = Directory.GetFiles(path);
-            var alldir = Directory.GetDirectories(path);
-            List<FileAPI> allfilesapi = new List<FileAPI>();
-            foreach (var fileraw in allfiles)
-            {
-                var fileinfo = new FileInfo(path + fileraw);
-                FileAPI file = new FileAPI();
-                file.Name = Path.GetFileName(fileraw);
-                file.FullPath = fileinfo.FullName.Replace('\\', '/');
-                file.Size = fileinfo.Length;
-                file.Dir = false;
-                file.Creation = Directory.GetCreationTime(path + fileraw);
-                file.LastAccess = Directory.GetLastAccessTime(path + fileraw);
-                file.LastWrite = Directory.GetLastWriteTime(path + fileraw);
-                file.ReadOnlyFil = fileinfo.IsReadOnly;
-                allfilesapi.Add(file);
-            }
+#pragma warning disable CS8602 // Dereferenziamento di un possibile riferimento Null.
+                if (path.Length >= System.Configuration.ConfigurationManager.AppSettings.Get("Path").Length)
+                {
+                     var allfiles = Directory.GetFiles(path);
+                                var alldir = Directory.GetDirectories(path);
+                                List<FileAPI> allfilesapi = new List<FileAPI>();
+                                foreach (var fileraw in allfiles)
+                                {
+                                    var fileinfo = new FileInfo(fileraw);
+                                    FileAPI file = new FileAPI();
+                                    file.Name = Path.GetFileName(fileraw);
+                                    file.FullPath = fileinfo.FullName.Replace('\\', '/');
+                                    file.Size = fileinfo.Length;
+                                    file.Dir = false;
+                                    file.Creation = Directory.GetCreationTime(fileraw);
+                                    file.LastAccess = Directory.GetLastAccessTime(fileraw);
+                                    file.LastWrite = Directory.GetLastWriteTime(fileraw);
+                                    file.ReadOnlyFil = fileinfo.IsReadOnly;
+                                    allfilesapi.Add(file);
+                                }
 
-            foreach (var dir in alldir)
-            {
-                FileAPI file = new FileAPI();
-                file.Name = Path.GetFileName(dir);
-                file.FullPath = "";
-                file.Size = 0;
-                file.Dir = true;
-                allfilesapi.Add(file);
-            }
+                                foreach (var dir in alldir)
+                                {
+                                    FileAPI file = new FileAPI();
+                                    file.Name = Path.GetFileName(dir);
+                                    file.FullPath = Path.GetFullPath(dir).Replace('\\', '/');
+                                    file.Size = 0;
+                                    file.Dir = true;
+                                    allfilesapi.Add(file);
+                                }
 
-            return JsonConvert.SerializeObject(allfilesapi);
+                                return JsonConvert.SerializeObject(allfilesapi);
+                }
+                else
+                {
+                    return "0";
+                }
+#pragma warning restore CS8602 // Dereferenziamento di un possibile riferimento Null.
+           
         }
         catch (Exception ex)
         {

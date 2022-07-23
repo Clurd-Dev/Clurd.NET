@@ -6,7 +6,7 @@
 	import { onMount } from 'svelte';
 	// import FSBrowser from '../file-browser/browser.svelte';
 	// import Details from '$lib/details/details.svelte';
-	import { Rename } from '$lib/js/io.js';
+	import { Rename, Delete } from '$lib/js/io.js';
     import Fa from 'svelte-fa/src/fa.svelte';
     import { faCopy } from '@fortawesome/free-solid-svg-icons/index.es';
 	import './contex.css';
@@ -25,6 +25,17 @@
 		}else{
 			dialogs.alert("Error during renaming of file");
 		}
+	}
+	async function remove(){
+		dialogs.confirm("Are you sure to delete this file?").then(response => {
+			if(response){
+				if(Delete(path)){
+					dialogs.alert("File removed successfully").then(() => location.reload());
+				}else{
+					dialogs.alert("Error during deleting file");
+				};
+			}
+		});
 	}
 </script>
 
@@ -62,25 +73,12 @@
 		</li>
 		<li class="download">
 			<a href={current_file}><i class="fa fa-download" aria-hidden="true" /> Download</a>
-		</li>
+		</li>-->
 		<li
 			class="trash"
-			on:click={remove(current_file.replace(url, ''), getfile, path, only_file)}
+			on:click={remove}
 		>
 			<a href="#"><i class="fa fa-trash" aria-hidden="true" /> Delete</a>
 		</li>
-		<li
-			class="trash"
-			on:click={() =>
-				dialogs.modal(Details, {
-					ls: ls,
-					name_file: current_file,
-					path: path,
-					current_name: current_name,
-					file_name: only_file
-				})}
-		>
-			<a href="#"><i class="fa fa-trash" aria-hidden="true" /> Details</a>
-		</li> -->
 	</ul>
 </div>

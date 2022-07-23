@@ -1,23 +1,23 @@
 ﻿<script>
     import { onMount } from "svelte";
     import axios from 'axios';
-    import qs from 'qs';
     import 'bootstrap/dist/css/bootstrap.css';
     import Fa from 'svelte-fa/src/fa.svelte';
-    import { faFile, faFolder } from '@fortawesome/free-solid-svg-icons/index.es';
+    import { faFile, faFolder, faArrowLeftLong } from '@fortawesome/free-solid-svg-icons/index.es';
     import { dialogs } from "svelte-dialogs";
     import Info from '$lib/components/Info.svelte';
     import { Circle2 } from 'svelte-loading-spinners';
     import Contex from '$lib/components/contex/contex.svelte';
     import { rightClick, hideMenu } from '$lib/js/menu';
     import { getfiles } from '$lib/js/io.js';
-    let only_file, current_file, location_website, path, pathsplitted;
+    let only_file, current_file, location_website, path, pathsplitted, current_path;
     let files = [];
     let loading = true;
     onMount(async() => {
+        current_path = await (await axios.get("/api/config")).data;
         location_website = location.origin;
         document.onclick = hideMenu;
-        files = await getfiles("./");
+        files = await getfiles(current_path);
         loading = false;
     });
     function contex(e) {
@@ -27,9 +27,38 @@
             current_file = pathsplitted[pathsplitted.length - 1];
         }
 	}
+
+    async function navigatetofolder(path){
+        current_path = path;
+        files = await getfiles(path);
+    }
+
+    async function goback(){
+        let backup = current_path;
+        let pathsplit = current_path.split("/");
+        pathsplit.pop();
+        current_path = pathsplit.join("/");
+        let newfiles = await getfiles(current_path);
+        if(newfiles == "0"){
+            dialogs.alert("Can't go back through home");
+            current_path = backup;
+        }else{
+            files = newfiles;
+        }
+        
+    }
 </script>
 
 <Contex {current_file} {path} {pathsplitted}/>
+
+<ul class="nav">
+    <li class="nav-item">
+        <a class="nav-link" href="" on:click={goback}>
+            <Fa icon={faArrowLeftLong} size="2x"></Fa>
+        </a>
+    </li>
+  </ul>
+
 {#if loading == true}
 <center>
     <br>
@@ -59,7 +88,7 @@
             <p id={file.FullPath}>{file.Name}</p>
         </div>
             {:else}
-            <div class="grid-item" id={file.FullPath} >
+            <div class="grid-item" id={file.FullPath} on:click={() => navigatetofolder(file.FullPath)} >
                 <div id={file.FullPath}>
                     <Fa icon={faFolder} size="1.5x" ></Fa>  
                 </div>
