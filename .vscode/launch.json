@@ -5,14 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": ".NET Core Launch (console)",
+      "name": ".NET Core Launch svelte (console)",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
       // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/VueCliMiddleware/bin/Debug/netcoreapp2.2/VueCliMiddleware.dll",
+      "program": "${workspaceFolder}/Clurd/Clurd/bin/Debug/net6.0/Clurd.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/VueCliMiddleware",
+      "cwd": "${workspaceFolder}/Clurd/Clurd",
       // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
       "console": "internalConsole",
       "stopAtEntry": false,

@@ -7,33 +7,29 @@
     import { faFile, faFolder } from '@fortawesome/free-solid-svg-icons/index.es';
     import { dialogs } from "svelte-dialogs";
     import Info from '$lib/components/Info.svelte';
-    import { Circle2 } from 'svelte-loading-spinners'
+    import { Circle2 } from 'svelte-loading-spinners';
+    import Contex from '$lib/components/contex/contex.svelte';
+    import { rightClick, hideMenu } from '$lib/js/menu';
+    import { getfiles } from '$lib/js/io.js';
+    let only_file, current_file, location_website, path, pathsplitted;
     let files = [];
     let loading = true;
-    onMount(() => {
-        var data = qs.stringify({
-            'path': './' 
-        });
-        var config = {
-            method: 'post',
-            url: '/api/files',
-            headers: { 
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data : data
-            };
-
-        axios(config)
-            .then(function (response) {
-                files = response.data;
-                loading = false;
-        })
-            .catch(function (error) {
-                console.log(error);
-        });
+    onMount(async() => {
+        location_website = location.origin;
+        document.onclick = hideMenu;
+        files = await getfiles("./");
+        loading = false;
     });
+    function contex(e) {
+        if(rightClick(e) != "0"){
+            path = rightClick(e);
+            pathsplitted = path.split("/")
+            current_file = pathsplitted[pathsplitted.length - 1];
+        }
+	}
 </script>
 
+<Contex {current_file} {path} {pathsplitted}/>
 {#if loading == true}
 <center>
     <br>
@@ -44,10 +40,10 @@
     <p>Getting files information from server</p>
 </center>
 {:else}
-<div class="grid-container">
+<div class="grid-container" on:contextmenu={contex}>
     {#each files as file}
     {#if file.Dir == false}
-        <div class="grid-item" on:click={() => dialogs.modal(Info, {
+        <div class="grid-item" id={file.FullPath} on:click={() => dialogs.modal(Info, {
             file: file.Name,
             path: file.FullPath,
             size: file.Size,
@@ -56,13 +52,19 @@
             creation: file.Creation,
             readonly: file.ReadOnlyFil
         })}>
-            <Fa icon={faFile} size="1.5x"></Fa>   
-            <p>{file.Name}</p>
+        <div id={file.FullPath}>
+            <Fa icon={faFile} size="1.5x" id={file.FullPath}></Fa>   
+        </div>
+            
+            <p id={file.FullPath}>{file.Name}</p>
         </div>
             {:else}
-            <div class="grid-item">
-                <Fa icon={faFolder} size="1.5x"></Fa>   
-                <p>{file.Name}</p>
+            <div class="grid-item" id={file.FullPath} >
+                <div id={file.FullPath}>
+                    <Fa icon={faFolder} size="1.5x" ></Fa>  
+                </div>
+                 
+                <p id={file.FullPath}>{file.Name}</p>
             </div>
             {/if}
          

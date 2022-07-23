@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/VueCliMiddleware/VueCliMiddleware.csproj"
+                "${workspaceFolder}/Clurd/Clurd/Clurd.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -18,7 +18,7 @@
             "group": "test",   
             "args": [
                 "test",
-                "${workspaceFolder}/VueCliMiddleware.Tests/VueCliMiddleware.Tests.csproj"
+                "${workspaceFolder}/Clurd.Tests/Clurd.Tests.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

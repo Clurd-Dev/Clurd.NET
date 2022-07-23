@@ -69,7 +69,7 @@ namespace Clurd.IO
                 var fileinfo = new FileInfo(path + fileraw);
                 FileAPI file = new FileAPI();
                 file.Name = Path.GetFileName(fileraw);
-                file.FullPath = fileinfo.FullName;
+                file.FullPath = fileinfo.FullName.Replace('\\', '/');
                 file.Size = fileinfo.Length;
                 file.Dir = false;
                 file.Creation = Directory.GetCreationTime(path + fileraw);
