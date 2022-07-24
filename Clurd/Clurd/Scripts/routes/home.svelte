@@ -1,4 +1,5 @@
 ﻿<script>
+    import { SvelteToast,toast } from '@zerodevx/svelte-toast'
     import { onMount } from "svelte";
     import axios from 'axios';
     import 'bootstrap/dist/css/bootstrap.css';
@@ -9,8 +10,8 @@
     import { Circle2 } from 'svelte-loading-spinners';
     import Contex from '$lib/components/contex/contex.svelte';
     import { rightClick, hideMenu } from '$lib/js/menu';
-    import { getfiles } from '$lib/js/io.js';
-    let only_file, current_file, location_website, path, pathsplitted, current_path;
+    import { getfiles, Upload } from '$lib/js/io.js';
+    let only_file, current_file, location_website, path, pathsplitted, current_path, inputfiles;
     let files = [];
     let loading = true;
     onMount(async() => {
@@ -46,6 +47,19 @@
             files = newfiles;
         }
     }
+
+    async function upload(){
+      toast.push("Upload started, please wait");
+      
+      if(await Upload(inputfiles, current_path.split("/").join("|"))){
+        toast.pop();
+        toast.push("Upload completed!");
+      }else{
+        toast.pop();
+        toast.push("Error during the uploading of file");
+      };
+    }
+
 </script>
 
 <nav class="navbar navbar-expand-lg bg-light">
@@ -65,7 +79,7 @@
   </nav>
 
 <Contex {current_file} {path} {pathsplitted}/>
-
+<SvelteToast />
 <ul class="nav">
     <li class="nav-item">
         <a class="nav-link" href="" on:click={goback}>
@@ -112,6 +126,23 @@
          
     {/each}
   </div>
+  <br/>
+  <center>
+    <h3>Upload files in this directory</h3>
+  </center>
+  <br/>
+
+    <div class="form-group" style="margin: 20px;">
+       <input type="file" class="form-control" id="files" name="image" multiple bind:this={inputfiles}/>
+    </div>
+
+    <br/>
+    <div class="form-group" align="center">
+       <button type="submit" class="btn btn-primary" on:click={upload}>Upload</button>
+    </div>
+    <br/>
+
+
   {/if}
 
 

@@ -84,3 +84,20 @@ export async function Move(oldpath, newpath){
     };
   return  await (await axios(config)).data;
 }
+
+export async function Upload(input, path){
+  const formData = new FormData();
+  console.log(input.files);
+  for(let i = 0; i < input.files.length; i++){
+    formData.append(input.files[i].name, input.files[i]);
+  }
+
+  return await (await axios({
+    method: "POST",
+    url: "/api/upload/" + path,
+    data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  })).data
+}

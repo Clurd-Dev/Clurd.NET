@@ -23,4 +23,35 @@ public class FilesController : Controller
         }
 
     }
+
+    [HttpPost("api/upload/{path}")]
+    public async Task<bool> Upload(string path)
+    {
+        try
+        {
+            var files = HttpContext.Request.Form.Files;
+            path = path.Replace("|", "/");
+            if (files.Count > 0)
+            {
+                foreach (var file in files)
+                {
+
+                    //var uploads = Path.Combine(_environment.WebRootPath, "files");
+                    string FileName = file.FileName;
+                    Console.WriteLine(FileName);
+                    using (var fileStream = new FileStream(Path.Combine(path, FileName), FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                }
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return false;
+        }
+
+    }
 }
