@@ -45,7 +45,6 @@
         }else{
             files = newfiles;
         }
-        
     }
 </script>
 

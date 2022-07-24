@@ -24,4 +24,18 @@ public class IoController : Controller
         var io = new IO.IO();
         return io.Space();
     }
+
+    [HttpPost("api/copy")]
+    public bool copy(IFormCollection value)
+    {
+        var io = new IO.IO();
+        return io.Copy(value["oldpath"], value["newpath"]);
+    }
+
+    [HttpPost("api/move")]
+    public bool move(IFormCollection value)
+    {
+        var io = new IO.IO();
+        return io.Move(value["oldpath"], value["newpath"]);
+    }
 }

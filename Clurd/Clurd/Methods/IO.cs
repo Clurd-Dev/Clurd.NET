@@ -61,7 +61,7 @@ namespace Clurd.IO
         {
                try
         {
-#pragma warning disable CS8602 // Dereferenziamento di un possibile riferimento Null.
+#pragma warning disable CS8602 // ignore null warning.
                 if (path.Length >= System.Configuration.ConfigurationManager.AppSettings.Get("Path").Length)
                 {
                      var allfiles = Directory.GetFiles(path);
@@ -106,6 +106,30 @@ namespace Clurd.IO
             Console.WriteLine(ex);
             return "[]";
         }
+        }
+        public bool Copy(string oldpath, string newpath)
+        {
+            try
+            {
+                System.IO.File.Copy(oldpath, newpath);
+                return true;
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
+        }
+        public bool Move(string oldpath, string newpath)
+        {
+            try
+            {
+                System.IO.File.Move(oldpath, newpath);
+                return true;
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
         }
     }
 }

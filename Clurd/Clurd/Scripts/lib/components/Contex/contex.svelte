@@ -9,6 +9,7 @@
 	import { Rename, Delete } from '$lib/js/io.js';
     import Fa from 'svelte-fa/src/fa.svelte';
     import { faCopy } from '@fortawesome/free-solid-svg-icons/index.es';
+	import FileBrowser from '$lib/components/FileBrowser/FileBrowser.svelte';
 	import './contex.css';
 	onMount(()=>{
 		url = location.origin;
@@ -50,28 +51,17 @@
 		<li class="rename" on:click={renamefile}>
 			<a href="#0" ><i class="fa fa-pencil" aria-hidden="true" /> Rename</a>
 		</li>
-		<!-- <li class="link">
+		 <!-- <li class="link">
 			<a href="#0" on:click={copy(current_file)}
 				><i class="fa fa-link" aria-hidden="true" /> Copy Link Address</a
 			>
-		</li>
-		<li class="copy">
-			<a
-				href="#0"
-				on:click={() =>
-					dialogs.modal(FSBrowser, {
-						ls: ls,
-						path: path,
-						current_name: current_name,
-						current_file: current_file,
-						file: only_file,
-						old_path: old_path
-					})}
-			>
+		</li> -->
+		<li class="copy" on:click={() => dialogs.modal(FileBrowser, {old_path: path, current_file: current_file})}>
+			<a href="#0">
 				<i class="fa fa-copy" aria-hidden="true" /> Copy/Move to
 			</a>
 		</li>
-		<li class="download">
+		<!--<li class="download">
 			<a href={current_file}><i class="fa fa-download" aria-hidden="true" /> Download</a>
 		</li>-->
 		<li

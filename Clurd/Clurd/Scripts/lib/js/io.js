@@ -52,3 +52,35 @@ export async function Delete(path){
       };
     return  await (await axios(config)).data;
 }
+
+export async function Copy(oldpath, newpath){
+  let data = qs.stringify({
+    'oldpath': oldpath,
+    'newpath': newpath
+  });
+  let config = {
+      method: 'post',
+      url: '/api/copy',
+      headers: { 
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data : data
+    };
+  return  await (await axios(config)).data;
+}
+
+export async function Move(oldpath, newpath){
+  let data = qs.stringify({
+    'oldpath': oldpath,
+    'newpath': newpath
+  });
+  let config = {
+      method: 'post',
+      url: '/api/move',
+      headers: { 
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data : data
+    };
+  return  await (await axios(config)).data;
+}
