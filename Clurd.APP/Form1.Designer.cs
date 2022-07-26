@@ -34,6 +34,7 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.path = new System.Windows.Forms.TextBox();
             this.select = new System.Windows.Forms.Button();
+            this.editconfig = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // start
@@ -100,11 +101,22 @@
             this.select.UseVisualStyleBackColor = true;
             this.select.Click += new System.EventHandler(this.select_Click);
             // 
+            // editconfig
+            // 
+            this.editconfig.Location = new System.Drawing.Point(555, 155);
+            this.editconfig.Name = "editconfig";
+            this.editconfig.Size = new System.Drawing.Size(224, 47);
+            this.editconfig.TabIndex = 6;
+            this.editconfig.Text = "Edit config file";
+            this.editconfig.UseVisualStyleBackColor = true;
+            this.editconfig.Click += new System.EventHandler(this.editconfig_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(925, 274);
+            this.Controls.Add(this.editconfig);
             this.Controls.Add(this.select);
             this.Controls.Add(this.path);
             this.Controls.Add(this.checkBox2);
@@ -126,5 +138,6 @@
         private CheckBox checkBox2;
         private TextBox path;
         private Button select;
+        private Button editconfig;
     }
 }

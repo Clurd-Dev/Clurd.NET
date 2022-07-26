@@ -10,6 +10,13 @@ namespace Clurd.APP
         public Form1()
         {
             InitializeComponent();
+            if(File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/server.config"))
+            {
+                var pathraw = File.ReadAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/server.config");
+                pathclurd = pathraw;
+                this.path.Text = pathraw;   
+                
+            }
         }
 
         bool local = true;
@@ -61,11 +68,15 @@ namespace Clurd.APP
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     pathclurd = fbd.SelectedPath;
+                    File.WriteAllTextAsync(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/server.config", pathclurd);
                     this.path.Text = fbd.SelectedPath;
                 }
             }
         }
 
-      
+        private void editconfig_Click(object sender, EventArgs e)
+        {
+            Process.Start("notepad.exe", pathclurd + "/app.config");
+        }
     }
 }
