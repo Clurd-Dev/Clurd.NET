@@ -14,7 +14,7 @@
 case "$1" in
   start)
     echo "Starting Clurd server"
-    sudo -u USER bash -c 'cd PATHTOCLURD & nohup ./Clurd &> log.out &'
+    sudo -u USER bash -c 'cd PATHTOCLURD & nohup ./Clurd --urls="http://0.0.0.0:5000" &> log.out &'
     ;;
   stop)
     echo "Stopping Clurd server"
