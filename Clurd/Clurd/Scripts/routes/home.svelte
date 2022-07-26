@@ -8,7 +8,7 @@
     import { dialogs } from "svelte-dialogs";
     import Info from '$lib/components/Info.svelte';
     import { Circle2 } from 'svelte-loading-spinners';
-    import Contex from '$lib/components/contex/contex.svelte';
+    import Contex from '$lib/components/Contex/contex.svelte';
     import { rightClick, hideMenu } from '$lib/js/menu';
     import { getfiles, Upload } from '$lib/js/io.js';
     let only_file, current_file, location_website, path, pathsplitted, current_path, inputfiles;
