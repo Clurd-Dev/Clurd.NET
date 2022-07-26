@@ -61,8 +61,10 @@ namespace Clurd.IO
         {
                try
         {
+                var pathraw = System.IO.File.ReadAllText("./config.json");
+
 #pragma warning disable CS8602 // ignore null warning.
-                if (path.Length >= System.Configuration.ConfigurationManager.AppSettings.Get("Path").Length)
+                if (path.Length >= JsonConvert.DeserializeObject<Config>(pathraw).path.Length)
                 {
                      var allfiles = Directory.GetFiles(path);
                                 var alldir = Directory.GetDirectories(path);

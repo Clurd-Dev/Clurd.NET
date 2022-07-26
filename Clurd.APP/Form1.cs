@@ -76,7 +76,7 @@ namespace Clurd.APP
 
         private void editconfig_Click(object sender, EventArgs e)
         {
-            Process.Start("notepad.exe", pathclurd + "/app.config");
+            Process.Start("notepad.exe", pathclurd + "/config.json");
         }
     }
 }

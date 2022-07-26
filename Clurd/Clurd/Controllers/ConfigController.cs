@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Clurd.Model;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 namespace Clurd.Controllers
 {
     public class ConfigController : Controller
@@ -6,8 +8,9 @@ namespace Clurd.Controllers
         [HttpGet("api/config")]
         public string Getpath()
         {
+            var path = System.IO.File.ReadAllText("./config.json");
 #pragma warning disable CS8603
-            return System.Configuration.ConfigurationManager.AppSettings.Get("Path");
+            return JsonConvert.DeserializeObject<Config>(path).path;
 #pragma warning restore CS8603
         }
     }
