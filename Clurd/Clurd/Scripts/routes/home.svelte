@@ -1,7 +1,6 @@
 ﻿<script>
     import { SvelteToast,toast } from '@zerodevx/svelte-toast'
     import { onMount } from "svelte";
-    import axios from 'axios';
     import 'bootstrap/dist/css/bootstrap.css';
     import Fa from 'svelte-fa/src/fa.svelte';
     import { faFile, faFolder, faArrowLeftLong } from '@fortawesome/free-solid-svg-icons/index.es';
@@ -34,6 +33,7 @@
     function contex(e) {
         if(rightClick(e) != "0"){
             path = rightClick(e);
+            console.log(path);
             pathsplitted = path.split("/")
             current_file = pathsplitted[pathsplitted.length - 1];
         }
@@ -41,6 +41,7 @@
 
     async function navigatetofolder(path){
         current_path = path;
+        console.log(current_path);
         files = await getfiles(path);
     }
 

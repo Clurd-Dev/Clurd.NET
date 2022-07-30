@@ -1,4 +1,5 @@
 using Jering;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.SpaServices;
 using SpaCliMiddleware;
 
@@ -10,6 +11,14 @@ builder.Services.AddControllers();
 builder.Services.AddRazorPages();
 // Add Jering Node services
 builder.Services.ConfigureNodejsService();
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MemoryBufferThreshold = Int32.MaxValue;
+    options.ValueCountLimit = 10; //default 1024
+    options.ValueLengthLimit = int.MaxValue; //not recommended value
+    options.MultipartBodyLengthLimit = long.MaxValue; //not recommended value
+});
 
 var app = builder.Build();
 

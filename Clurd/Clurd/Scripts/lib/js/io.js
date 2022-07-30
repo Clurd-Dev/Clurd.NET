@@ -1,9 +1,11 @@
 import qs from 'qs';
 import axios from 'axios';
 export async function getfiles(path){
-    console.log(path);
+    console.log(path.path);
     let data = qs.stringify({
-        'path': path
+        'path': path,
+        'username': sessionStorage.getItem("username"),
+        'password': sessionStorage.getItem("password")
     });
     let config = {
         method: 'post',
@@ -25,7 +27,9 @@ export async function getfiles(path){
 export async function Rename(old, newpath){
     let data = qs.stringify({
         'old': old,
-        'new': newpath 
+        'new': newpath ,
+        'username': sessionStorage.getItem("username"),
+        'password': sessionStorage.getItem("password")
       });
     let config = {
         method: 'post',
@@ -40,7 +44,9 @@ export async function Rename(old, newpath){
 
 export async function Delete(path){
     let data = qs.stringify({
-        'path': path
+        'path': path,
+        'username': sessionStorage.getItem("username"),
+        'password': sessionStorage.getItem("password")
     });
     let config = {
         method: 'post',
@@ -56,7 +62,9 @@ export async function Delete(path){
 export async function Copy(oldpath, newpath){
   let data = qs.stringify({
     'oldpath': oldpath,
-    'newpath': newpath
+    'newpath': newpath,
+    'username': sessionStorage.getItem("username"),
+    'password': sessionStorage.getItem("password")
   });
   let config = {
       method: 'post',
@@ -72,7 +80,9 @@ export async function Copy(oldpath, newpath){
 export async function Move(oldpath, newpath){
   let data = qs.stringify({
     'oldpath': oldpath,
-    'newpath': newpath
+    'newpath': newpath,
+    'username': sessionStorage.getItem("username"),
+    'password': sessionStorage.getItem("password")
   });
   let config = {
       method: 'post',
@@ -94,7 +104,7 @@ export async function Upload(input, path){
 
   return await (await axios({
     method: "POST",
-    url: "/api/upload/" + path,
+    url: "/api/upload/?path=" + path + "&username=" + sessionStorage.getItem("username") + "&password=" + sessionStorage.getItem("password"),
     data: formData,
     headers: {
       "Content-Type": "multipart/form-data"

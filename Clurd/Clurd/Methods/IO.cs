@@ -48,10 +48,19 @@ namespace Clurd.IO
         {
             try
             {
-                System.IO.File.Delete(path);
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+                if (Directory.Exists(path))
+                {
+                    Directory.Delete(path, true);
+                }
                 return true;
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
+
                 Console.WriteLine(ex);
                 return false;
             }   

@@ -10,6 +10,8 @@ export async function Updateconfig(path, username, password, oldpass){
         password = md5(password);
     }
     var data = qs.stringify({
+        'oldpass': oldpass,
+        'olduser': sessionStorage.getItem("user"),
         'username': username,
         'password': password,
         'path': path

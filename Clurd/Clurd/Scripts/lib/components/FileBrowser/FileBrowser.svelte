@@ -8,7 +8,7 @@
     let current_path, files = [];
     export let old_path, current_file;
     onMount(async() => {
-        current_path = await (await axios.get("/api/config")).data;
+        current_path = await ((await axios.get("/api/config")).data).path;
         files = await getfiles(current_path);
     });
     async function navigatetofolder(path){
