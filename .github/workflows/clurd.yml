@@ -21,4 +21,4 @@ jobs:
     - name: Install Node dependencies for Svelte
       run: cd Clurd/Clurd/ && npm i
     - name: Build
-      run:  dotnet build
+      run:  cd Clurd/Clurd/ && dotnet build
