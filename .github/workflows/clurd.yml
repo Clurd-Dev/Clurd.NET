@@ -1,0 +1,24 @@
+name: Clurd server CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - name: Install Node dependencies for Svelte
+      run: cd Clurd/Clurd/ && npm i
+    - name: Build
+      run:  cd Clurd/Clurd/ && dotnet build
