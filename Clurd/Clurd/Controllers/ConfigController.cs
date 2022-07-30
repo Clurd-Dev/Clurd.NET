@@ -1,6 +1,6 @@
-﻿using Clurd.Model;
+﻿using Clurd.Methods;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+
 namespace Clurd.Controllers
 {
     public class ConfigController : Controller
@@ -8,11 +8,16 @@ namespace Clurd.Controllers
         [HttpGet("api/config")]
         public string Getpath()
         {
-            var path = System.IO.File.ReadAllText("./config.json");
-#pragma warning disable CS8603
-            return JsonConvert.DeserializeObject<Config>(path).path;
-#pragma warning restore CS8603
+            return System.IO.File.ReadAllText("./config.json");
         }
+
+        [HttpPost("api/config")]
+        public bool Update(IFormCollection value)
+        {
+            var updater = new ConfigUpdater();
+            return updater.UpdateConfig(value["path"], value["username"], value["password"]);
+        }
+        
     }
 }
     

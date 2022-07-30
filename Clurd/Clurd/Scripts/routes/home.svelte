@@ -11,15 +11,25 @@
     import Contex from '$lib/components/Contex/contex.svelte';
     import { rightClick, hideMenu } from '$lib/js/menu';
     import { getfiles, Upload } from '$lib/js/io.js';
+    import { login, logout } from '$lib/js/login.js';
+    import { Getconfig } from '$lib/js/config.js';
     let only_file, current_file, location_website, path, pathsplitted, current_path, inputfiles;
     let files = [];
     let loading = true;
     onMount(async() => {
-        current_path = await (await axios.get("/api/config")).data;
-        location_website = location.origin;
-        document.onclick = hideMenu;
-        files = await getfiles(current_path);
-        loading = false;
+        await import("bootstrap/dist/js/bootstrap.js");
+        let user = sessionStorage.getItem("username");
+        let password = sessionStorage.getItem("password");
+        if(!await login(user, password)){
+          dialogs.alert("Please first login then connect to Clurd dashboard").then(() => location.href = "/login")
+        }else{
+          current_path = (await Getconfig()).path;
+          location_website = location.origin;
+          document.onclick = hideMenu;
+          files = await getfiles(current_path);
+          loading = false;   
+        }
+
     });
     function contex(e) {
         if(rightClick(e) != "0"){
@@ -27,7 +37,7 @@
             pathsplitted = path.split("/")
             current_file = pathsplitted[pathsplitted.length - 1];
         }
-	}
+	  }
 
     async function navigatetofolder(path){
         current_path = path;
@@ -74,6 +84,9 @@
             <a class="nav-link" href="/settings">Settings</a>
           </li>
         </ul>
+        <div class="d-flex" role="search">
+          <button class="btn btn-danger" type="submit" on:click={logout}>Logout</button>
+        </div>
       </div>
     </div>
   </nav>
