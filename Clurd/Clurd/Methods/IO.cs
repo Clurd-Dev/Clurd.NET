@@ -142,5 +142,14 @@ namespace Clurd.IO
                 return false;
             }
         }
+        public bool Createfolder(string path){
+            try{
+                Directory.CreateDirectory(path);
+                return true;
+            }catch(Exception ex){
+                Console.WriteLine(ex);
+                return false;
+            }
+        }
     }
 }
