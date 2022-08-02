@@ -74,7 +74,7 @@ namespace Clurd.IO
         {
                 var pathraw = System.IO.File.ReadAllText("./config.json");
 
-#pragma warning disable CS8602 // ignore null warning.
+                #pragma warning disable CS8602 // ignore null warning.
                 if (path.Length >= JsonConvert.DeserializeObject<Config>(pathraw).path.Length)
                 {
                      var allfiles = Directory.GetFiles(path);
@@ -111,7 +111,7 @@ namespace Clurd.IO
                 {
                     return "0";
                 }
-#pragma warning restore CS8602 // Dereferenziamento di un possibile riferimento Null.
+                #pragma warning restore CS8602 // Dereferenziamento di un possibile riferimento Null.
            
         }
         catch (Exception ex)
