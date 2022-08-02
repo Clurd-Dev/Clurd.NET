@@ -80,7 +80,7 @@ public class IoController : Controller
         }
     }
     [HttpPost("api/newfolder")]
-    public bool createfolder(IFormCollection value){
+    public bool Createfolder(IFormCollection value){
         var io = new IO.IO();
         var configstring = System.IO.File.ReadAllText("./config.json");
         var config = JsonConvert.DeserializeObject<Config>(configstring);

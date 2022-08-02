@@ -26,14 +26,16 @@ namespace Clurd.IO
             {
                 foreach (var disk in disks)
                 {
-                    var diskapi = new Disk();
-                    diskapi.Name = disk.Name;
-                    diskapi.Type = disk.DriveType.ToString();
-                    diskapi.TotalSize = disk.TotalSize;
-                    diskapi.TotalFreespace = disk.TotalFreeSpace;
-                    diskapi.FreeSpace = disk.TotalFreeSpace;
-                    diskapi.Fs = disk.DriveFormat;
-                    diskapi.Label = disk.VolumeLabel;
+                    var diskapi = new Disk
+                    {
+                        Name = disk.Name,
+                        Type = disk.DriveType.ToString(),
+                        TotalSize = disk.TotalSize,
+                        TotalFreespace = disk.TotalFreeSpace,
+                        FreeSpace = disk.TotalFreeSpace,
+                        Fs = disk.DriveFormat,
+                        Label = disk.VolumeLabel
+                    };
                     diskspace.Add(diskapi);
                 }
             }
